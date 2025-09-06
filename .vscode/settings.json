@@ -1,0 +1,3 @@
+{
+  "python.analysis.extraPaths": ["./latest_ai_development/src"]
+}

@@ -2,9 +2,18 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
-from crewai_tools import SerperDevTool
+from crewai.tools import SerperDevTool
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+from crew import LatestAiDevelopment
+from latest_ai_development.src.config.crew import LatestAiDevelopment
+from src.tools.crew import LatestAiDevelopment
+from latest_ai_development.src.tools.crew import LatestAiDevelopment
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
+
 @CrewBase
 class LatestAiDevelopment():
     """LatestAiDevelopment crew"""

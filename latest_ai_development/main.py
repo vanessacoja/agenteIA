@@ -2,14 +2,17 @@
 import sys
 import warnings
 import os
+from random import randint
+from pydantic import BaseModel
+from crewai.flow.flow import Flow, listen, start
 
 # Add the parent directory to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from datetime import datetime
-from crew import LatestAiDevelopment
-from latest_ai_development.crew import LatestAiDevelopment
-
+#from tools.custom_tool import MyCustomToolInput
+from src.tools import MyCustomToolInput as ToolInput
+from src.config.crew import LatestAiDevelopment
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -17,7 +20,11 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # crew locally, so refrain from adding unnecessary logic into this file.
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
-
+if LatestAiDevelopment:
+ print("LatestAiDevelopment is set to True")
+else: 
+    print("LatestAiDevelopment is set to False")
+  
 def run():
     """
     Run the crew.
