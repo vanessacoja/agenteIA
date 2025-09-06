@@ -1,0 +1,33 @@
+research_task:
+  description: >
+    Conduct a thorough research about {topic}
+    Make sure you find any interesting and relevant information given
+    the current year is {current_year}.
+  expected_output: >
+    A list with 10 bullet points of the most relevant information about {topic}
+  agent: catalog_resercher
+
+reporting_task:
+  description: >
+    Analisar as informações coletadas sobre {topic} e gerar um relatório detalhado.
+  expected_output: >
+    Um relatório completo com as principais seções sobre o livro, cada uma detalhada com informações relevantes.
+    Formatação em markdown, sem uso de blocos de código ('```').
+  agent: reporting_analyst
+
+puchase_research_task:
+  description: >
+    Pesquisar as melhores opções de compra para o livro {book_title} considerando preço, condições de pagamento e
+    prazos de entrega.
+  expected_output: >
+    Uma lista com as 5 melhores opções de compra para o livro {book_title}, incluindo detalhes como preço, condições
+    de pagamento e prazos de entrega.
+  agent: purchase_researcher
+
+ticket_simulation_task:
+   description: >
+    Simular a abertura de um ticket de suporte técnico para o problema descrito: {issue_description}.   
+    expected_output: >
+    Um resumo detalhado do ticket aberto, incluindo informações como prioridade, categoria e descrição do problema.
+    agent: ticket_simulator
+    
