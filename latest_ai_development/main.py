@@ -5,76 +5,33 @@ import os
 from random import randint
 from pydantic import BaseModel
 from crewai.flow.flow import Flow, listen, start
+from agents.catalog_agent import CatalogAgent
+from agents.purchase_agent import PurchaseAgent
+from agents.support_agent import SupportAgent
+from agents.llm_agent import LLMAgent
+import os
 
-# Add the parent directory to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+API_KEY = os.environ.get("GEMINI_API_KEY")
 
-from datetime import datetime
-#from tools.custom_tool import MyCustomToolInput
-from src.tools import MyCustomToolInput as ToolInput
-from src.config.crew import LatestAiDevelopment
+def main():
+    catalog_agent = CatalogAgent()
+    purchase_agent = PurchaseAgent()
+    support_agent = SupportAgent()
+    llm_agent = LLMAgent(API_KEY)
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+    user_input = input("Qual livro você quer consultar? ")
+    book = catalog_agent.find_book(user_input)
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-if LatestAiDevelopment:
- print("LatestAiDevelopment is set to True")
-else: 
-    print("LatestAiDevelopment is set to False")
-  
-def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
-    }
-    
-    try:
-        LatestAiDevelopment().crew().kickoff(inputs=inputs)
-    except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+    if book:
+        print(f"\nTítulo: {book['title']}")
+        print(f"Autor: {book['author']}")
+        print("Resumo (LLM):", llm_agent.summarize(book["summary"]))
+        print(f"Preço: R${book['price']}")
+        print("Links para compra:", purchase_agent.get_purchase_links(book))
+    else:
+        print("Livro não encontrado. Deseja abrir um ticket de suporte? (s/n)")
+        if input().lower() == "s":
+            print(support_agent.open_ticket(user_input))
 
-
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
-    }
-    try:
-        LatestAiDevelopment().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        LatestAiDevelopment().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
-    }
-    
-    try:
-        LatestAiDevelopment().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+if __name__ == "__main__":
+    main()
