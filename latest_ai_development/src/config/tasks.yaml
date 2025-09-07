@@ -1,3 +1,5 @@
+#Este arquivo define tarefas que cada agente deve executar. Ele funciona como um roteiro que instrui os agentes do projeto sobre o que fazer e qual saída é esperada.
+
 reporting_task:
   description: >
     Analisar as informações coletadas sobre {topic} e gerar um relatório detalhado.

@@ -1,9 +1,9 @@
 from your_tool.tool import YourTool
 
 custom_tool = YourTool()
+# Este agente pesquisa o catálogo interno em busca de dados de livro
 
-
-catalog_resercher:
+catalog_researcher:
   role: >
     Agente de consulta do catalogo interno
   goal: >
